@@ -23,12 +23,12 @@ jobs:
 
       - name: run stylelint
         if: contains(github.event.pull_request.diff_hunk, '.css') 
-        run: npx stylelint "**/*.{css,scss}"
+        run: npx stylelint "**/*.css"
 
       - name: install eslint
-        if: contains(github.event.pull_request.diff_hunk, '.js')
+        if: contains(github.event.pull_request.diff_hunk, '.js') || contains(github.event.pull_request.diff_hunk, '.mjs')
         run: npm install --save-dev eslint
 
       - name: run eslint
-        if: contains(github.event.pull_request.diff_hunk, '.js')
-        run: npx eslint "**/*.js"
+        if: contains(github.event.pull_request.diff_hunk, '.js') || contains(github.event.pull_request.diff_hunk, '.mjs')
+        run: npx eslint "**/*.{js,mjs}"
