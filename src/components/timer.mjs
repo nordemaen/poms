@@ -10,7 +10,7 @@ export class Timer extends HTMLElement {
   #durationInput;
   #durationOptions;
   #selectedDuration;
-  #remainingTime; 
+  #remainingTime;
 
   constructor() {
     super();
@@ -69,16 +69,20 @@ export class Timer extends HTMLElement {
     }
 
     this.#remainingTime = this.#selectedDuration * 60;
-    this.#intervalId = setInterval(() => {
+
+    let intervalCallback = () => {
       if (!this.#isPaused) {
         if (this.#remainingTime > 0) {
-          this.#remainingTime--; 
+          this.#remainingTime--;
           this.#updateDisplay();
         } else {
-          this.stop(); 
+          this.stop();
         }
       }
-    }, 1000);
+    };
+
+    intervalCallback();
+    this.#intervalId = setInterval(intervalCallback, 1000);
   }
 
   stop() {
