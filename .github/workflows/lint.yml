@@ -1,0 +1,34 @@
+name: Lint
+
+on:
+  pull_request:
+    branches: [develop] 
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        if: contains(github.event.pull_request.diff_hunk, '.css') || contains(github.event.pull_request.diff_hunk, '.js') || contains(github.event.pull_request.diff_hunk, '.mjs')
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: install stylelint
+        if: contains(github.event.pull_request.diff_hunk, '.css')
+        run: npm install --save-dev stylelint stylelint-config-standard
+
+      - name: run stylelint
+        if: contains(github.event.pull_request.diff_hunk, '.css') 
+        run: npx stylelint "**/*.css"
+
+      - name: install eslint
+        if: contains(github.event.pull_request.diff_hunk, '.js') || contains(github.event.pull_request.diff_hunk, '.mjs')
+        run: npm install --save-dev eslint
+
+      - name: run eslint
+        if: contains(github.event.pull_request.diff_hunk, '.js') || contains(github.event.pull_request.diff_hunk, '.mjs')
+        run: npx eslint "**/*.{js,mjs}"
