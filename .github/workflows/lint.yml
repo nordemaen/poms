@@ -11,30 +11,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Check for relevant file changes
-        id: check_changes
-        run: |
-          if git diff --name-only HEAD^ HEAD | grep -E '\.(js|mjs|css)$'; then
-            echo "::set-output name=has_changes::true"
-          else
-            echo "::set-output name=has_changes::false"
-          fi
+      - name: Filter paths
+        id: filter
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            js: ['**/*.js', '**/*.mjs']
+            css: ['**/*.css']
 
       - name: Set up Node.js
-        if: steps.check_changes.outputs.has_changes == 'true'
+        if: steps.filter.outputs.js == 'true' || steps.filter.outputs.css == 'true'
         uses: actions/setup-node@v3
         with:
           node-version: 16
 
       - name: Install linters
-        if: steps.check_changes.outputs.has_changes == 'true'
-        run: |
-          npm install --global stylelint stylelint-config-standard eslint
+        if: steps.filter.outputs.js == 'true' || steps.filter.outputs.css == 'true'
+        run: npm install --global stylelint stylelint-config-standard eslint
 
       - name: Run stylelint
-        if: steps.check_changes.outputs.has_changes == 'true' && contains(github.event.pull_request.diff_hunk, '.css')
+        if: steps.filter.outputs.css == 'true'
         run: stylelint "**/*.css"
 
       - name: Run eslint
-        if: steps.check_changes.outputs.has_changes == 'true' && (contains(github.event.pull_request.diff_hunk, '.js') || contains(github.event.pull_request.diff_hunk, '.mjs'))
+        if: steps.filter.outputs.js == 'true'
         run: eslint "**/*.{js,mjs}"
