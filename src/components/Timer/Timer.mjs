@@ -3,6 +3,7 @@
 export class Timer extends HTMLElement {
   #intervalId;
   #isPaused = false;
+  #timerSVG;
   #timerDisplay;
   #startButton;
   #stopButton;
@@ -12,26 +13,13 @@ export class Timer extends HTMLElement {
   #selectedDuration;
   #remainingTime;
 
-  constructor() {
-    super();
+  async connectedCallback() {
     this.attachShadow({ mode: 'open' });
-    this.shadowRoot.innerHTML = `
-      <div>
-        <label for="duration">Duration:</label>
-        <select id="durationOptions">
-          <option value="25">25 minutes</option>
-          <option value="50">50 minutes</option>
-          <option value="custom">Custom</option>
-        </select>
-        <input type="number" id="durationInput" min="1" step="1" style="display: none;">
-        <button id="start">Start</button>
-        <button id="stop">Stop</button>
-        <button id="pause">Pause</button>
-        <p id="timer">0</p>
-      </div>
-    `;
+    const response = await fetch(import.meta.resolve('./Timer.html')).then()
+    this.shadowRoot.innerHTML = await response.text();
 
-    this.#timerDisplay = this.shadowRoot.querySelector('#timer');
+    this.#timerSVG = this.shadowRoot.querySelector('#timer');
+    this.#timerDisplay = this.#timerSVG.querySelector('text');
     this.#startButton = this.shadowRoot.querySelector('#start');
     this.#stopButton = this.shadowRoot.querySelector('#stop');
     this.#pauseButton = this.shadowRoot.querySelector('#pause');
@@ -104,6 +92,7 @@ export class Timer extends HTMLElement {
   #updateDisplay() {
     const minutes = Math.floor(this.#remainingTime / 60);
     const seconds = this.#remainingTime % 60;
+    this.#timerSVG.style.setProperty('--delay', `-${this.#remainingTime / (this.#selectedDuration*60)}s`)
     this.#timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   }
 }
