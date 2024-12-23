@@ -27,7 +27,7 @@ jobs:
 
       - name: Install linters
         if: steps.filter.outputs.js == 'true' || steps.filter.outputs.css == 'true'
-        run: npm install --global stylelint stylelint-config-standard eslint
+        run: npm install --global eslint stylelint stylelint-config-standard eslint-plugin-eslint
 
       - name: Run stylelint
         if: steps.filter.outputs.css == 'true'
