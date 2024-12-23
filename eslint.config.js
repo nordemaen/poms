@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ['eslint:recommended'],
+  rules: require('eslint-plugin-eslint/recommended').rules,
 };
