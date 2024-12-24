@@ -29,8 +29,7 @@ jobs:
         run: npm install eslint eslint-config-standard
 
       - name: Create ESLint config
-        run: |
-          echo "module.exports = { \"extends\": \"standard\" };" > .eslintrc.js
+        run: echo "module.exports = { \"extends\": \"standard\" };" > .eslintrc.js
 
       - name: Run ESLint
         if: steps.filter.outputs.js == 'true'
