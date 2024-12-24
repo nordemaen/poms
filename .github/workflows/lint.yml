@@ -30,7 +30,7 @@ jobs:
 
       - name: Create ESLint config
         run: |
-          echo "module.exports = { 'extends': 'standard' };" > .eslintrc.js
+          echo "module.exports = { \"extends\": \"standard\" };" > .eslintrc.js
 
       - name: Run ESLint
         if: steps.filter.outputs.js == 'true'
