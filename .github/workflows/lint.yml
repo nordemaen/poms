@@ -1,38 +1,38 @@
-name: Lint
+name: Lint and Format
 
 on:
-  pull_request:
-    branches: [develop]
+    pull_request:
+        branches: [develop]
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: 🛒 Checkout code
-        uses: actions/checkout@v3
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+            - name: 🛒 Checkout code
+              uses: actions/checkout@v3
 
-      - name: 📂 Filter paths
-        id: filter
-        uses: dorny/paths-filter@v2
-        with:
-          filters: |
-            js:
-              - '**/*.js'
-              - '**/*.mjs'
+            - name: 📂 Filter paths
+              id: filter
+              uses: dorny/paths-filter@v2
+              with:
+                  filters: |
+                      js:
+                        - '**/*.js'
+                        - '**/*.mjs'
 
-      - name: 🛫 Set up Node.js
-        if: steps.filter.outputs.js == 'true'
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
+            - name: 🛫 Set up Node.js
+              if: steps.filter.outputs.js == 'true'
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 18
 
-      - name: 📄 Install ESLint
-        if: steps.filter.outputs.js == 'true'
-        run: |
-          npm init -y
-          npm install eslint eslint-config-standard
+            - name: 📄 Install ESLint
+              if: steps.filter.outputs.js == 'true'
+              run: |
+                  npm init -y
+                  npm install eslint eslint-config-standard eslint-plugin-html eslint-plugin-jsdoc eslint-plugin-security
 
-      - name: Create ESLint config
+            - name: Create ESLint config
               if: steps.filter.outputs.js == 'true'
               run: |
                   echo "{
@@ -74,6 +74,7 @@ jobs:
                       }
                   }" > .eslintrc.json
 
-      - name: Run ESLint
-        if: steps.filter.outputs.js == 'true'
-        run: npx eslint "**/*.{js,mjs}" --fix
+
+            - name: Run ESLint
+              if: steps.filter.outputs.js == 'true'
+              run: npx eslint "**/*.{js,mjs}" 
