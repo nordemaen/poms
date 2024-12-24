@@ -16,7 +16,9 @@ jobs:
         uses: dorny/paths-filter@v2
         with:
           filters: |
-            js: ['**/*.js', '**/*.mjs']
+            js:
+              - '**/*.js'
+              - '**/*.mjs'
 
       - name: 🛫 Set up Node.js
         if: steps.filter.outputs.js == 'true'
@@ -24,13 +26,19 @@ jobs:
         with:
           node-version: 18
 
-      - name: 📄 Install linters
+      - name: 📄 Install ESLint
         if: steps.filter.outputs.js == 'true'
-        run: npm install eslint eslint-config-standard
+        run: |
+          npm init -y
+          npm install eslint eslint-config-standard
 
       - name: Create ESLint config
-        run: echo "module.exports = { \"extends\": \"standard\" };" > .eslintrc.js
-        
+        if: steps.filter.outputs.js == 'true'
+        run: |
+          echo "{
+            \"extends\": \"standard\"
+          }" > .eslintrc.json
+
       - name: Run ESLint
         if: steps.filter.outputs.js == 'true'
-        run: npx eslint "**/*.{js,mjs}
+        run: npx eslint "**/*.{js,mjs}" --fix
