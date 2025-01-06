@@ -1,3 +1,3 @@
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register("/worker.mjs")
+  navigator.serviceWorker.register('/worker.mjs');
 }

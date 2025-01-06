@@ -92,7 +92,7 @@ export class Timer extends HTMLElement {
   #updateDisplay() {
     const minutes = Math.floor(this.#remainingTime / 60);
     const seconds = this.#remainingTime % 60;
-    this.#timerSVG.style.setProperty('--delay', `-${this.#remainingTime / (this.#selectedDuration*60)}s`)
+    this.#timerSVG.style.setProperty('--delay', `-${this.#remainingTime / (this.#selectedDuration * 60)}s`)
     this.#timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   }
 }
