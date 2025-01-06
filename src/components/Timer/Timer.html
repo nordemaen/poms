@@ -1,0 +1,46 @@
+<style>
+  svg {
+    /* ISSUE: #13 Remove fixed width from Timer + remove manual <br> */
+    width: 20em;
+
+    stroke: var(--stroke);
+    fill: none;
+
+    circle {
+      transform: rotate(-90deg) scaleY(-1);
+      transform-origin: center;
+      animation: timerAnimation linear 1s;
+      animation-play-state: paused;
+      animation-delay: var(--delay);
+    }
+  }
+
+  @keyframes timerAnimation {
+    0% {
+      stroke-dasharray: 0 283;
+    }
+
+    100% {
+      stroke-dasharray: 283 283;
+    }
+  }
+</style>
+
+<label for="duration">Duration:</label>
+<select id="durationOptions">
+  <option value="25">25 minutes</option>
+  <option value="50">50 minutes</option>
+  <option value="custom">Custom</option>
+</select>
+<input type="number" id="durationInput" min="1" step="1" style="display: none;" pattern="\d+">
+
+<button id="start">Start</button>
+<button id="stop">Stop</button>
+<button id="pause">Pause</button>
+
+<br>
+
+<svg id="timer" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="--stroke: #eec8e0; --delay: -1s">
+  <circle cx="50" cy="50" r="45"></circle>
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">0</text>
+</svg>
