@@ -21,7 +21,7 @@ async function staleWhileRevalidate(request) {
   const cachedResponse = await cache.match(request);
 
   // Avoid a try-catch block using the catch promise method
-  const networkResponse = await fetch(request, {mode: 'cors', headers: {'Access-Control-Allow-Origin': '*'}}).catch(() =>
+  const networkResponse = await fetch(request, { mode: 'cors', headers: { 'Access-Control-Allow-Origin': '*' } }).catch(() =>
     new Response('Request Timeout', { status: 408, headers: { 'Content-Type': 'text/plain' } }),
   );
 
