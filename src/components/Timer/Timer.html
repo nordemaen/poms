@@ -34,6 +34,14 @@
       stroke-dasharray: 0 283;
     }
   }
+
+  #durationInput {
+    display: none;
+  }
+
+  select:has(option:last-child:checked) ~ #durationInput {
+    display: block;
+  }
 </style>
 
 <svg id="timer" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -47,7 +55,7 @@
   <option value="50">50 minutes</option>
   <option value="custom">Custom</option>
 </select>
-<input type="number" id="durationInput" min="1" step="1" style="display: none;" pattern="\d+">
+<input type="number" id="durationInput" min="1" step="1" pattern="\d+">
 
 <div class="controls">
   <button id="start">Start</button>
