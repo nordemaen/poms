@@ -24,7 +24,6 @@ export class Task extends HTMLElement {
                 border: none;          /* Remove the border */
                 background: none;      /* Remove the background color */
                 outline: none;         /* Remove the focus outline */
-                font: inherit;         /* Inherit the font from the parent element */
                 color: inherit; 
             }
         `;

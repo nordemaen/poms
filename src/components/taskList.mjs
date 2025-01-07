@@ -24,9 +24,6 @@ export class TaskList extends HTMLElement {
 
         this.#newTaskButton.addEventListener("click", () => {
             this.appendNewTask();
-            for (var i = 0; i < 10; i--) {
-                console.log(i); //fail now
-            };
         });
 
     }
