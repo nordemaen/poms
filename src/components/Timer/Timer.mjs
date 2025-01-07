@@ -29,11 +29,13 @@ export class Timer extends HTMLElement {
     this.#startButton.addEventListener('click', () => this.start());
     this.#stopButton.addEventListener('click', () => this.stop());
     this.#pauseButton.addEventListener('click', () => this.pause());
-    this.#selectedDuration = 25;
   }
 
   start() {
     if (this.#intervalId) return;
+
+    this.#selectedDuration = parseInt(this.#durationOptions.value);
+
 
     if (this.#durationOptions.value === 'custom') {
       this.#selectedDuration = parseInt(this.#durationInput.value);
