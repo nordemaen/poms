@@ -26,23 +26,10 @@ export class Timer extends HTMLElement {
     this.#durationInput = this.shadowRoot.querySelector('#durationInput');
     this.#durationOptions = this.shadowRoot.querySelector('#durationOptions');
 
-    this.#durationOptions.addEventListener('change', () => this.handleDurationChange());
-
     this.#startButton.addEventListener('click', () => this.start());
     this.#stopButton.addEventListener('click', () => this.stop());
     this.#pauseButton.addEventListener('click', () => this.pause());
     this.#selectedDuration = 25;
-  }
-
-  handleDurationChange() {
-    const selectedOption = this.#durationOptions.value;
-
-    if (selectedOption === 'custom') {
-      this.#durationInput.style.display = 'block';
-    } else {
-      this.#durationInput.style.display = 'none';
-      this.#selectedDuration = parseInt(selectedOption);
-    }
   }
 
   start() {
