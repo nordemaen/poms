@@ -17,6 +17,11 @@ export class TaskList extends HTMLElement {
             </ol>
         </div>
         `;
+
+        const css = `
+            
+        `;
+
         this.#taskList = this.shadowRoot.querySelector("#taskList");
         this.#newTaskButton = this.shadowRoot.querySelector("#newTaskButton");
 
