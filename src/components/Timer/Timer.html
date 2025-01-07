@@ -24,6 +24,14 @@
       stroke-dasharray: 283 283;
     }
   }
+
+  #durationInput {
+    display: none;
+  }
+
+  select:has(option:last-child:checked) ~ #durationInput {
+    display: block;
+  }
 </style>
 
 <label for="duration">Duration:</label>
@@ -32,7 +40,7 @@
   <option value="50">50 minutes</option>
   <option value="custom">Custom</option>
 </select>
-<input type="number" id="durationInput" min="1" step="1" style="display: none;" pattern="\d+">
+<input type="number" id="durationInput" min="1" step="1" pattern="\d+">
 
 <button id="start">Start</button>
 <button id="stop">Stop</button>
