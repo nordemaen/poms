@@ -13,25 +13,32 @@
     /* ISSUE: #13 Remove fixed width from Timer + remove manual <br> */
     width: 20em;
 
+    --stroke: #5664f5;
+    --delay: -1s;
+
     stroke: var(--stroke);
-    fill: none;
 
     circle {
+      fill: none;
       transform: rotate(-90deg) scaleY(-1);
       transform-origin: center;
       animation: timerAnimation linear 1s;
       animation-play-state: paused;
       animation-delay: var(--delay);
     }
+
+    text {
+      fill: var(--stroke);
+    }
   }
 
   @keyframes timerAnimation {
     0% {
-      stroke-dasharray: 283 0;
+      stroke-dasharray: 0 283;
     }
 
     100% {
-      stroke-dasharray: 0 283;
+      stroke-dasharray: 283 283;
     }
   }
 
@@ -44,9 +51,15 @@
   }
 </style>
 
+<select id="timerState" hidden>
+  <option value="active"></option>
+  <option value="break"></option>
+  <option value="paused"></option>
+</select>
+
 <svg id="timer" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="50" cy="50" r="45" stroke="#5664f5" stroke-width="1" fill="none"></circle>
-  <text x="50%" y="50%" fill="#5664f5" dominant-baseline="middle" text-anchor="middle">0</text>
+  <circle cx="50" cy="50" r="45" stroke-width="1"></circle>
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">0</text>
 </svg>
 <br>
 <label for="duration">Duration:</label>
