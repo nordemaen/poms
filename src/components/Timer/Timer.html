@@ -88,7 +88,6 @@
 
   svg {
     /* ISSUE: #13 Remove fixed width from Timer + remove manual <br> */
-    width: 20em;
 
     --stroke: #5664f5;
     --delay: -1s;
@@ -106,25 +105,28 @@
 
     text {
       fill: var(--stroke);
-    }
-  }
-
-  @keyframes timerAnimation {
-    0% {
-      stroke-dasharray: 0 283;
+      font-family: 'Arial', sans-serif;
+      font-size: 1.5rem;
+      font-weight: bold;
     }
 
-    100% {
-      stroke-dasharray: 283 283;
+    @keyframes timerAnimation {
+      0% {
+        stroke-dasharray: 0 283;
+      }
+
+      100% {
+        stroke-dasharray: 283 283;
+      }
     }
-  }
 
-  #durationInput {
-    display: none;
-  }
+    #durationInput {
+      display: none;
+    }
 
-  select:has(option:last-child:checked)~#durationInput {
-    display: block;
+    select:has(option:last-child:checked)~#durationInput {
+      display: block;
+    }
   }
 </style>
 
