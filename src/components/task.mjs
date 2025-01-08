@@ -15,17 +15,13 @@ export class Task extends HTMLElement {
     <li class="task">
         <input type="checkbox" id="taskCheckbox">
         <input type="text" id="taskTitle" placeholder="Type your task...">
-        <button id="deleteButton">✕</button>
+        <button id="deleteButton" class="actionButton">✕</button>
+        <button id="editButton" class="actionButton">⋮</button>
     </li>
 `;
 
         const css = `
-    * {
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding: 0;
-}
+   
 
 .task {
     display: flex;
@@ -76,7 +72,7 @@ export class Task extends HTMLElement {
     padding: 0.5rem;
 }
 
-#deleteButton {
+.actionButton {
     background: none;
     border: none;
     color: #5664F5;
@@ -86,11 +82,11 @@ export class Task extends HTMLElement {
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-#deleteButton:hover {
+.actionButton:hover {
     color: #3B48D9;
 }
 
-#deleteButton:active {
+.actionButton:active {
     background-color: #D0D4FF;
     color: #2A37A8;
 }

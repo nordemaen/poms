@@ -35,6 +35,31 @@ export class TaskList extends HTMLElement {
             height: 3px;
             background-color: #5664f5;
         }
+
+        #newTaskButton {
+    background-color: #f0f1ff;
+    color: #5664f5;
+    font-weight: bold;
+    border: none;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+  }
+
+     #newTaskButton:hover {
+    background-color: #e6e7ff;
+    box-shadow: 0 0.375rem 0.75rem rgba(0, 0, 0, 0.1);
+  }
+
+     #newTaskButton:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.25rem rgba(86, 100, 245, 0.2);
+  }
         `;
 
         this.#style = document.createElement("style");
