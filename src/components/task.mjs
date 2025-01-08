@@ -25,75 +25,75 @@ export class Task extends HTMLElement {
     font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 0;
-    }
+}
 
-    .task {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background-color: #F0F1FF;
-        padding: 1rem 1.25rem; 
-        border-radius: 0 1rem 1rem 0; 
-        margin-bottom: 1.2rem;
-        box-shadow: 0 0.25rem 1.5rem rgba(0, 0, 0, 0.05);
-        transition: transform 0.15s ease, box-shadow 0.15s ease;
-        border-left: 4px solid #5664f5; 
-    }
+.task {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #F0F1FF;
+    padding: 1rem 1.25rem; 
+    border-radius: 0 1rem 1rem 0; 
+    margin-bottom: 1.2rem;
+    box-shadow: 0 0.25rem 1.5rem rgba(0, 0, 0, 0.05);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    border-left: 4px solid #5664f5; 
+}
 
-    .task:hover {
-        transform: translateY(-0.25rem);
-        box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.1);
-    }
+.task:hover {
+    transform: translateY(-0.25rem);
+    box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.1);
+}
 
-    #taskCheckbox {
-        accent-color: #5664F5;
-        width: 1.5rem;
-        height: 1.5rem;
-        margin-right: 0.875rem;
-        cursor: pointer;
-    }
+#taskCheckbox {
+    accent-color: #5664F5;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.875rem;
+    cursor: pointer;
+}
 
-    #taskTitle {
-        flex-grow: 1;
-        border: none;
-        background: none;
-        outline: none;
-        color: #5664F5;
-        font-size: 1.125rem;
-        padding: 0.375rem 0;
-        font-weight: 500;
-        transition: background-color 0.2s ease, box-shadow 0.2s ease;
-    }
+#taskTitle {
+    flex-grow: 1;
+    border: none;
+    background: none;
+    outline: none;
+    color: #5664F5;
+    font-size: 1.125rem;
+    padding: 0.375rem 0;
+    font-weight: 500;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
 
-    #taskTitle::placeholder {
-        color: #A3A6FF;
-    }
+#taskTitle::placeholder {
+    color: #A3A6FF;
+}
 
-    #taskTitle:focus {
-        background-color: #E0E3FF;
-        box-shadow: 0 0 0 0.125rem #5664F5;
-        border-radius: 0.5rem;
-        padding: 0.5rem;
-    }
+#taskTitle:focus {
+    background-color: #E0E3FF;
+    box-shadow: 0 0 0 0.125rem #5664F5;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+}
 
-    #deleteButton {
-        background: none;
-        border: none;
-        color: #5664F5;
-        font-size: 1.125rem;
-        padding: 0.375rem;
-        cursor: pointer;
-        transition: background-color 0.2s ease, color 0.2s ease;
-    }
+#deleteButton {
+    background: none;
+    border: none;
+    color: #5664F5;
+    font-size: 1.125rem;
+    padding: 0.375rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
 
-    #deleteButton:hover {
-        color: #3B48D9;
-    }
+#deleteButton:hover {
+    color: #3B48D9;
+}
 
-    #deleteButton:active {
-        background-color: #D0D4FF;
-        color: #2A37A8;
-    }
+#deleteButton:active {
+    background-color: #D0D4FF;
+    color: #2A37A8;
+}
 `;
 
         // Add the CSS to the Shadow DOM
