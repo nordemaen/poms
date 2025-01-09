@@ -3,7 +3,6 @@ export class TaskList extends HTMLElement {
   #taskList;
 
   async connectedCallback() {
-    // this.attachShadow({ mode: 'open' });
     const response = await fetch(import.meta.resolve('./TaskList.html'))
     this.innerHTML = await response.text();
 

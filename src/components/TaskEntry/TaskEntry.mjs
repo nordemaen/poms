@@ -5,7 +5,6 @@ export default class TaskEntry extends HTMLLIElement {
   done;
 
   async connectedCallback() {
-    // Built-in elements don't use shadow dom
     const response = await fetch(import.meta.resolve('./TaskEntry.html'))
     this.innerHTML = await response.text();
 
