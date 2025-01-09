@@ -1,3 +1,3 @@
 export * from './Timer/Timer.mjs';
-export * from './taskList.mjs';
-export * from './task.mjs';
+export * from './TaskEntry/TaskEntry.mjs';
+export * from './TaskList/TaskList.mjs';

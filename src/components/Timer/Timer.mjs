@@ -15,7 +15,7 @@ export class Timer extends HTMLElement {
 
   async connectedCallback() {
     this.attachShadow({ mode: 'open' });
-    const response = await fetch(import.meta.resolve('./Timer.html')).then()
+    const response = await fetch(import.meta.resolve('./Timer.html'))
     this.shadowRoot.innerHTML = await response.text();
 
     this.#timerSVG = this.shadowRoot.querySelector('#timer');
