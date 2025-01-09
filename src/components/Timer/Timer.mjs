@@ -14,17 +14,16 @@ export class Timer extends HTMLElement {
   #remainingTime;
 
   async connectedCallback() {
-    this.attachShadow({ mode: 'open' });
     const response = await fetch(import.meta.resolve('./Timer.html'))
-    this.shadowRoot.innerHTML = await response.text();
+    this.innerHTML = await response.text();
 
-    this.#timerSVG = this.shadowRoot.querySelector('#timer');
+    this.#timerSVG = this.querySelector('#timer');
     this.#timerDisplay = this.#timerSVG.querySelector('text');
-    this.#startButton = this.shadowRoot.querySelector('#start');
-    this.#stopButton = this.shadowRoot.querySelector('#stop');
-    this.#pauseButton = this.shadowRoot.querySelector('#pause');
-    this.#durationInput = this.shadowRoot.querySelector('#durationInput');
-    this.#durationOptions = this.shadowRoot.querySelector('#durationOptions');
+    this.#startButton = this.querySelector('#start');
+    this.#stopButton = this.querySelector('#stop');
+    this.#pauseButton = this.querySelector('#pause');
+    this.#durationInput = this.querySelector('#durationInput');
+    this.#durationOptions = this.querySelector('#durationOptions');
 
     this.#startButton.addEventListener('click', () => this.start());
     this.#stopButton.addEventListener('click', () => this.stop());
