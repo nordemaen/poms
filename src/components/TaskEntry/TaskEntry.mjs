@@ -9,8 +9,8 @@ export default class TaskEntry extends HTMLLIElement {
     const response = await fetch(import.meta.resolve('./TaskEntry.html'))
     this.innerHTML = await response.text();
 
-    this.#checkbox = this.querySelector("#taskCheckbox");
-    this.taskTitle = this.querySelector("#taskTitle");
+    this.#checkbox = this.querySelector("input[type=checkbox]");
+    this.taskTitle = this.querySelector("input[type=text]");
     this.#deleteButton = this.querySelector("#deleteButton");
 
     this.#checkbox.addEventListener('change', () => { this.checkboxToggle() });
