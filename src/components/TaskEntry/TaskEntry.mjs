@@ -12,11 +12,7 @@ export default class TaskEntry extends HTMLLIElement {
     this.taskTitle = this.querySelector("input[type=text]");
     this.#deleteButton = this.querySelector("#deleteButton");
 
-    this.#deleteButton.addEventListener('click', () => { this.delete() });
-  }
-
-  delete() {
-    this.remove();
+    this.#deleteButton.addEventListener('click', () => { this.remove() });
   }
 }
 
