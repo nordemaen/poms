@@ -18,11 +18,10 @@ export class Timer extends HTMLElement {
   #animationId;
 
   async connectedCallback() {
-    this.attachShadow({ mode: 'open' });
     const response = await fetch(import.meta.resolve('./Timer.html'))
-    this.shadowRoot.innerHTML = await response.text();
+    this.innerHTML = await response.text();
 
-    this.#timerSVG = this.shadowRoot.querySelector('#timer');
+    this.#timerSVG = this.querySelector('#timer');
     this.#timerDisplay = this.#timerSVG.querySelector('text');
     this.#controls = this.shadowRoot.querySelector('fieldset');
     this.#durationInput = this.shadowRoot.querySelector('#durationInput');
