@@ -29,7 +29,7 @@
     box-shadow: 0 0 0 0.25rem rgba(86, 100, 245, 0.2);
   }
 
-  .controls {
+  /* .controls {
     display: flex;
     justify-content: center;
     margin-top: 1rem;
@@ -53,38 +53,10 @@
     font-size: 0.9rem;
   }
 
-  .controls button::before {
-    content: '';
-    display: block;
-    width: 1.5rem;
-    height: 1.5rem;
-    margin-bottom: 0.5rem;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-
-  #start::before {
-    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%235664f5"%3E%3Cpath d="M8 5v14l11-7z"/%3E%3C/svg%3E');
-  }
-
-  #pause::before {
-    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%235664f5"%3E%3Cpath d="M6 19h4V5H6zm8-14v14h4V5z"/%3E%3C/svg%3E');
-  }
-
-  #stop::before {
-    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%235664f5"%3E%3Cpath d="M12 4V1L8 5l4 4V6a8 8 0 1 1-8 8H2a10 10 0 1 0 10-10z"/%3E%3C/svg%3E');
-  }
-
-  .controls button:hover {
-    background-color: #e6e7ff;
-    box-shadow: 0 0.375rem 0.75rem rgba(0, 0, 0, 0.1);
-  }
-
   .controls button:focus {
     outline: none;
     box-shadow: 0 0 0 0.25rem rgba(86, 100, 245, 0.2);
-  }
+  } */
 
   svg {
     /* ISSUE: #13 Remove fixed width from Timer + remove manual <br> */
@@ -126,6 +98,29 @@
   select:has(option:last-child:checked)~#durationInput {
     display: block;
   }
+
+  /* Play, Pause, Reset */
+  fieldset {
+    label {
+      margin: .5em;
+    }
+
+    /* The currently selected option shouldn't be visible */
+    input,
+    input:checked+label,
+    #play:checked~#reset+label,
+    #pause:has(~#reset:checked)+label {
+      display: none;
+    }
+
+    svg { /* fix(timer): re-do control button styles */
+      width: 1em;
+    }
+
+    label:hover {
+      opacity: 70%;
+    }
+  }
 </style>
 
 <select id="durationOptions">
@@ -133,14 +128,34 @@
   <option value="50">50 minutes</option>
   <option value="custom">Custom</option>
 </select>
+
 <svg id="timer" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
   <circle cx="50" cy="50" r="45" stroke-width="1"></circle>
   <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">0</text>
 </svg>
 <br>
-<input type="number" id="durationInput" min="1" step="1" pattern="\d+">
-<div class="controls">
-  <button id="start">Start</button>
-  <button id="pause">Pause</button>
-  <button id="stop">Reset</button>
-</div>
+<input type="number" id="durationInput" min="1" step="1" value="1" pattern="\d+">
+
+<fieldset>
+  <input id="play" type="radio" name="controls" value="play">
+  <label for="play">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#5664f5">
+      <path d="M8 5v14l11-7z" />
+    </svg>
+    Play
+  </label>
+  <input id="pause" type="radio" name="controls" value="pause">
+  <label for="pause">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#5664f5">
+      <path d="M6 19h4V5H6zm8-14v14h4V5z" />
+    </svg>
+    Pause
+  </label>
+  <input id="reset" type="radio" name="controls" value="reset" checked>
+  <label for="reset">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#5664f5">
+      <path d="M12 4V1L8 5l4 4V6a8 8 0 1 1-8 8H2a10 10 0 1 0 10-10z" />
+    </svg>
+    Reset
+  </label>
+</fieldset>

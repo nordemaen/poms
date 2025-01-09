@@ -1,17 +1,21 @@
 'use strict';
 
+/** ms in one minute*/
+const MINUTE = 60_000;
+
 export class Timer extends HTMLElement {
-  #intervalId;
-  #isPaused = false;
   #timerSVG;
   #timerDisplay;
-  #startButton;
-  #stopButton;
-  #pauseButton;
+  #controls;
   #durationInput;
   #durationOptions;
-  #selectedDuration;
-  #remainingTime;
+
+  // ms
+  #time = 25 * MINUTE;
+  #maxTime = 25 * MINUTE;
+
+  #previousTimestamp;
+  #animationId;
 
   async connectedCallback() {
     this.attachShadow({ mode: 'open' });
@@ -20,69 +24,85 @@ export class Timer extends HTMLElement {
 
     this.#timerSVG = this.shadowRoot.querySelector('#timer');
     this.#timerDisplay = this.#timerSVG.querySelector('text');
-    this.#startButton = this.shadowRoot.querySelector('#start');
-    this.#stopButton = this.shadowRoot.querySelector('#stop');
-    this.#pauseButton = this.shadowRoot.querySelector('#pause');
+    this.#controls = this.shadowRoot.querySelector('fieldset');
     this.#durationInput = this.shadowRoot.querySelector('#durationInput');
     this.#durationOptions = this.shadowRoot.querySelector('#durationOptions');
 
-    this.#startButton.addEventListener('click', () => this.start());
-    this.#stopButton.addEventListener('click', () => this.stop());
-    this.#pauseButton.addEventListener('click', () => this.pause());
+    this.#controls.querySelectorAll('input').forEach(input => input.addEventListener('change', this.#handleStateChange.bind(this)));
+
+    const handleOptionChange = () => {
+      this.state = "reset";
+    };
+    this.#durationInput.addEventListener('change', handleOptionChange);
+    this.#durationOptions.addEventListener('change', handleOptionChange);
+
+    // Start animating the timer.
+    this.#previousTimestamp = performance.now();
+    this.#animationId = requestAnimationFrame(this.#animationFrame.bind(this));
   }
 
-  start() {
-    if (this.#intervalId) return;
+  disconnectedCallback() {
+    cancelAnimationFrame(this.#animationId);
+  }
 
-    this.#selectedDuration = parseInt(this.#durationOptions.value);
+  // Update timer whenever `state` changes
+  #handleStateChange() {
+    if (this.state === 'reset') {
+      this.#time = this.#selectedTime;
+      this.#maxTime = this.#selectedTime;
+    }
+  }
 
+  #animationFrame(timestamp) {
+    const elapsed = timestamp - this.#previousTimestamp;
+    this.#previousTimestamp = timestamp;
 
-    if (this.#durationOptions.value === 'custom') {
-      this.#selectedDuration = parseInt(this.#durationInput.value);
-      if (isNaN(this.#selectedDuration) || this.#selectedDuration < 1) {
-        alert('Please enter a valid duration (positive integer).');
+    if (this.state === 'play') {
+      if (this.#time <= 0) {
+        this.state = 'reset';
         return;
       }
+
+      this.#time -= elapsed;
     }
 
-    this.#remainingTime = this.#selectedDuration * 60;
+    this.#timerSVG.style.setProperty('--delay', `-${this.#time / this.#maxTime}s`);
+    this.#timerDisplay.textContent = `${this.minutes.padStart(2, '0')}:${this.seconds.padStart(2, '0')}`;
 
-    let intervalCallback = () => {
-      if (!this.#isPaused) {
-        if (this.#remainingTime > 0) {
-          this.#remainingTime--;
-          this.#updateDisplay();
-        } else {
-          this.stop();
-        }
-      }
-    };
-
-    intervalCallback();
-    this.#intervalId = setInterval(intervalCallback, 1000);
+    this.#animationId = requestAnimationFrame(this.#animationFrame.bind(this));
   }
 
-  stop() {
-    clearInterval(this.#intervalId);
-    this.#intervalId = null;
-    this.#remainingTime = this.#selectedDuration * 60;
-    this.#updateDisplay();
-    this.#isPaused = false;
+  get minutes() {
+    return (~~(this.#time / MINUTE)).toString()
   }
 
-  pause() {
-    this.#pauseButton.textContent = this.#isPaused ? 'Pause' : 'Resume';
+  get seconds() {
+    return (~~(this.#time % MINUTE / 1_000)).toString()
+  }
 
-    if (this.#intervalId) {
-      this.#isPaused = !this.#isPaused;
+  get #selectedTime() {
+    if (this.#durationOptions.value === 'custom')
+      return this.#customTime * MINUTE
+    else
+      return parseInt(this.#durationOptions.value) * MINUTE
+  }
+
+  get #customTime() {
+    const time = parseInt(this.#durationInput.value);
+    if (time < 1) {
+      alert('Please return a valid duration');
+      return NaN;
     }
+    return time;
   }
 
-  #updateDisplay() {
-    const minutes = Math.floor(this.#remainingTime / 60);
-    const seconds = this.#remainingTime % 60;
-    this.#timerSVG.style.setProperty('--delay', `-${this.#remainingTime / (this.#selectedDuration * 60)}s`)
-    this.#timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  get state() {
+    return this.#controls.querySelector('input:checked').id;
+  }
+
+  set state(state) {
+    this.#controls.querySelector(`#${state}`).checked = true;
+    this.#handleStateChange();
   }
 }
 
