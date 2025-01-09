@@ -9,7 +9,9 @@
     color: inherit;
   }
 
-  /* ISSUE: #35 fix(tasks): move strikethrough behaviour to CSS */
+  input[type=checkbox]:checked+input[type=text] {
+    text-decoration: line-through;
+  }
 </style>
 <!-- ISSUE: #36 fix(tasks): remove 'id' tags from inputs -->
 <input type="checkbox">
