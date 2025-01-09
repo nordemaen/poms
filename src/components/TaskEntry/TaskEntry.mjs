@@ -12,18 +12,7 @@ export default class TaskEntry extends HTMLLIElement {
     this.taskTitle = this.querySelector("input[type=text]");
     this.#deleteButton = this.querySelector("#deleteButton");
 
-    this.#checkbox.addEventListener('change', () => { this.checkboxToggle() });
     this.#deleteButton.addEventListener('click', () => { this.delete() });
-  }
-
-  checkboxToggle() {
-    if (this.#checkbox.checked) {
-      this.taskTitle.style.textDecoration = "line-through";
-      this.done = true;
-    } else {
-      this.taskTitle.style.textDecoration = "none";
-      this.done = false;
-    }
   }
 
   delete() {
