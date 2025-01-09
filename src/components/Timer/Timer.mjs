@@ -23,9 +23,9 @@ export class Timer extends HTMLElement {
 
     this.#timerSVG = this.querySelector('#timer');
     this.#timerDisplay = this.#timerSVG.querySelector('text');
-    this.#controls = this.shadowRoot.querySelector('fieldset');
-    this.#durationInput = this.shadowRoot.querySelector('#durationInput');
-    this.#durationOptions = this.shadowRoot.querySelector('#durationOptions');
+    this.#controls = this.querySelector('fieldset');
+    this.#durationInput = this.querySelector('#durationInput');
+    this.#durationOptions = this.querySelector('#durationOptions');
 
     this.#controls.querySelectorAll('input').forEach(input => input.addEventListener('change', this.#handleStateChange.bind(this)));
 
