@@ -2,7 +2,7 @@ const OBSERVER_CONFIG = {
   childList: true, // Watch for additions/removals of child nodes (<li>)
   subtree: true,   // Watch all descendants of the target node (including inputs within <li>)
   attributes: true, // Watch for attribute changes on the subtree (value changes on inputs)
-  attributeFilter: ['value'] // Only watch the value attribute
+  attributeFilter: ['value', 'checked'] // Only watch the value attribute
 };
 
 export class TaskList extends HTMLElement {
@@ -10,7 +10,7 @@ export class TaskList extends HTMLElement {
   #taskList;
   /** ID used to load/save the list from `localStorage`. */
   #itemName = `task-list-${this.id}`;
-  #observer = new MutationObserver(this.#mutationHandler);
+  #observer = new MutationObserver(this.#handleChange.bind(this));
 
   async connectedCallback() {
     const response = await fetch(import.meta.resolve('./TaskList.html'))
@@ -29,6 +29,7 @@ export class TaskList extends HTMLElement {
     }
 
     this.#observer.observe(this.#taskList, OBSERVER_CONFIG);
+    this.#taskList.addEventListener('input', this.#handleChange.bind(this));
   }
 
   get data() {
@@ -44,25 +45,14 @@ export class TaskList extends HTMLElement {
     }
   }
 
-  #mutationHandler(mutationsList) {
-    for (const mutation of mutationsList) {
-      if (mutation.type === 'childList') {
-        // Handle addition/removal of <li> elements
-        console.log('Child list changed:', mutation);
-        // You can further check mutation.addedNodes and mutation.removedNodes
-        mutation.removedNodes.forEach(removedNode => {
-          if (removedNode.nodeName === 'LI') {
-            console.log("An LI was removed");
-          }
-        })
-      } else if (mutation.type === 'attributes') {
-        // Handle changes to input values (indirectly, by observing attribute changes)
-        console.log('Attributes changed:', mutation);
-      }
-    }
+  #handleChange() {
+    let json;
+    try {
+      json = JSON.stringify(this.data);
+    } catch {}
+    // ISSUE: #50 refactor(tasks): change MutationObserver to not throw error
+    localStorage.setItem(this.#itemName, json);
   }
-
-  // TODO: add a MutationObserver
 }
 
 customElements.define('task-list', TaskList);
