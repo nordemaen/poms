@@ -14,7 +14,7 @@ export class TaskList extends HTMLElement {
     this.#taskList = this.querySelector('#taskList');
     // ISSUE: #37 feat(tasks): load tasks from localStorage
     // Click the button to make it add a new entry :)
-    this.#newTaskButton.dispatchEvent(new Event('click'))
+    // this.#newTaskButton.dispatchEvent(new Event('click'))
   }
 }
 
