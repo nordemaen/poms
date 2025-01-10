@@ -1,19 +1,68 @@
 <style>
+  article {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f0f1ff;
+    padding: 1rem 1.25rem;
+    border-radius: 0 1rem 1rem 0;
+    margin-bottom: 1.25rem;
+    transition: transform 0.15s ease;
+    border-left: .25rem solid #5664f5;
+  }
+
+  article:hover {
+    transform: translateY(-.25rem);
+  }
+
+  input[type=checkbox] {
+    accent-color: #5664f5;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: .875rem;
+    cursor: pointer;
+  }
+
   input[type=text] {
     border: none;
-    /* Remove the border */
+    font-size: 1.275rem;
+    color: #5664f5;
+    font-weight: 500;
     background: none;
-    /* Remove the background color */
     outline: none;
-    /* Remove the focus outline */
-    color: inherit;
+  }
+
+  input[type=text]::placeholder {
+    color: #a3a6ff;
   }
 
   input[type=checkbox]:checked+input[type=text] {
     text-decoration: line-through;
   }
+
+  .actionButton {
+    border: none;
+    background-color: #f0f1ff;
+    color: #5664f5;
+    font-size: 1.25rem;
+    padding: .375rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease, 
+                color 0.15s ease;
+  }
+
+  .actionButton:hover {
+    opacity: 70%;
+  }
+
+  .actionButton:active {
+    color: #2a37a8
+  }
 </style>
 <!-- ISSUE: #36 fix(tasks): remove 'id' tags from inputs -->
-<input type="checkbox">
-<input type="text" placeholder="Task title">
-<button id="deleteButton">Delete</button>
+<article>
+  <input type="checkbox">
+  <input type="text" placeholder="Task title">
+  <button id="deleteButton" class="actionButton">✕</button>
+  <button id="editButton" class="actionButton">⋮</button>
+</article>
