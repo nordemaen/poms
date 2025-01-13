@@ -13,5 +13,15 @@ body {
 
 /* A button, or something pretending to be */
 button, .button {
+    all: unset;
+    background-color: var(--color-component);
+    font-weight: bold;
+    padding: 1em;
+    cursor: pointer;
+    font-size: 1.25em;
+    border: var(--color-border) solid;
 
+    &:hover {
+        filter: brightness(var(--brightness));
+    }
 }
