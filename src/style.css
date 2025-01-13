@@ -3,12 +3,14 @@
 body {
     background-color: #f7f9fc;
     font-family: "Lexend Deca", serif;
-}
-
-.container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
+}
+
+/* A button, or something pretending to be */
+button, .button {
+
 }
