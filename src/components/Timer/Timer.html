@@ -29,35 +29,6 @@
     box-shadow: 0 0 0 0.25rem rgba(86, 100, 245, 0.2);
   }
 
-  /* .controls {
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
-    flex-direction: row;
-  }
-
-  .controls button {
-    background-color: #f0f1ff;
-    color: #5664f5;
-    font-weight: bold;
-    border: none;
-    border-radius: 1rem;
-    margin: 0.5rem;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
-  }
-
-  .controls button:focus {
-    outline: none;
-    box-shadow: 0 0 0 0.25rem rgba(86, 100, 245, 0.2);
-  } */
-
   svg {
     /* ISSUE: #13 Remove fixed width from Timer + remove manual <br> */
     width: 20em;
@@ -101,8 +72,31 @@
 
   /* Play, Pause, Reset */
   fieldset {
+    border: 0;
+    display: flex;
+
     label {
-      margin: .5em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-color: #f0f1ff;
+      font-weight: bold;
+      border-radius: 50%;
+      padding: 1.5rem;
+      width: 4rem;
+      height: 4rem;
+
+      svg {
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      &:hover {
+        opacity: 70%;
+      }
     }
 
     /* The currently selected option shouldn't be visible */
@@ -111,14 +105,6 @@
     #play:checked~#reset+label,
     #pause:has(~#reset:checked)+label {
       display: none;
-    }
-
-    svg { /* fix(timer): re-do control button styles */
-      width: 1em;
-    }
-
-    label:hover {
-      opacity: 70%;
     }
   }
 </style>

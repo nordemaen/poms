@@ -1,5 +1,3 @@
-'use strict';
-
 /** ms in one minute*/
 const MINUTE = 60_000;
 
