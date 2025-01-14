@@ -1,3 +1,5 @@
+import { notificationDisplay, playSound } from '../utils.mjs';
+
 const MINUTE = 60_000;
 
 export class Timer extends HTMLElement {
@@ -46,6 +48,7 @@ export class Timer extends HTMLElement {
             this.#time = this.#selectedTime;
             this.#maxTime = this.#selectedTime;
         } else if (this.state === 'play') {
+            playSound('../../start.mp3');
             this.#previousTimestamp = performance.now();
             this.#animationId = requestAnimationFrame(this.#animationFrame.bind(this));
         }
@@ -58,6 +61,7 @@ export class Timer extends HTMLElement {
         if (this.state === 'play') {
             if (this.#time <= 0) {
                 this.#handleBreakStateChange();
+                notificationDisplay('Pomodoro Timer', 'Time to take a break!');
                 return;
             }
             this.#time -= elapsed;
@@ -76,8 +80,10 @@ export class Timer extends HTMLElement {
     }
 
     #updateDisplay() {
+        const formattedTime = `${String(this.minutes).padStart(2, '0')}:${String(this.seconds).padStart(2, '0')}`;
         this.#timerSVG.style.setProperty('--delay', `-${this.#time / this.#maxTime}s`);
-        this.#timerDisplay.textContent = `${this.minutes.padStart(2, '0')}:${this.seconds.padStart(2, '0')}`;
+        this.#timerDisplay.textContent = formattedTime;
+        document.title = `${formattedTime} - Pom's Pomodoro`;
     }
 
     get minutes() {
@@ -90,16 +96,16 @@ export class Timer extends HTMLElement {
 
     get #selectedTime() {
         if (this.#durationOptions.value === 'custom') {
-          return this.#customTime * MINUTE
+            return this.#customTime * MINUTE
         }
         else {
-          return parseInt(this.#durationOptions.value) * MINUTE
+            return parseInt(this.#durationOptions.value) * MINUTE
         }
     }
 
     get #customTime() {
         const time = parseInt(this.#durationInput.value);
-        if ((isNaN(time)) || time < 1) { 
+        if ((isNaN(time)) || time < 1) {
             return 25; // just return it if not valid
         }
         return time;
