@@ -22,6 +22,10 @@ body {
 }
 
 timer-component {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+
   select+input {
     display: none
   }
@@ -47,7 +51,7 @@ timer-component {
     }
   }
 
-  menu {
+  fieldset {
     border: none;
     display: flex;
 
@@ -65,67 +69,37 @@ timer-component {
   }
 }
 
-/* .controls {
-
-  input,
-  input:checked+label {
-    display: none
-  }
-
-  &:is(fieldset) {
-    border: none;
-    display: flex;
-
-    #play:checked~#reset+label,
-    #pause:has(~#reset:checked)+label {
-      display: none;
-    }
-
-    svg {
-      width: 1.5rem;
-      height: 1.5rem;
-      margin-bottom: 0.5rem;
-    }
-  }
-}
-
-task-list li {
+task-list {
   display: flex;
+  flex-flow: column;
   align-items: center;
-  justify-content: space-between;
-  background-color: #f0f1ff;
-  padding: 1rem 1.25rem;
-  border-radius: 0 1rem 1rem 0;
-  margin-bottom: 1.25rem;
-  transition: transform 0.15s ease;
-  border-left: .25rem solid #5664f5;
 
-  &:hover {
-    filter: brightness(var(--brightness));
+  article {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--c);
+    padding: 1em;
+    border-radius: 0 1em 1em 0;
+    margin-bottom: .5em;
+    border-left: .25em solid var(--a);
+
+    &:hover {
+      filter: brightness(var(--brightness));
+    }
+
+    /* CSS magic to increase specificity */
+    button:not(#\9) {
+      background: var(--c);
+      border: none;
+    }
+  }
+
+  input[type=text] {
+    border: none;
+  }
+
+  input[type=checkbox]:checked+input[type=text] {
+    text-decoration: line-through;
   }
 }
-
-input[type=checkbox] {
-  accent-color: #5664f5;
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-right: .875rem;
-  cursor: pointer;
-}
-
-input[type=text] {
-  border: none;
-  font-size: 1.275rem;
-  color: #5664f5;
-  font-weight: 500;
-  background: none;
-  outline: none;
-}
-
-input[type=text]::placeholder {
-  color: #a3a6ff;
-}
-
-input[type=checkbox]:checked+input[type=text] {
-  text-decoration: line-through;
-} */

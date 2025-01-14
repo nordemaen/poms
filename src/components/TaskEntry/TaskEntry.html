@@ -1,31 +1,15 @@
-<style>
-  input[type=checkbox]:checked+input[type=text] {
-    text-decoration: line-through;
-  }
-
-  .actionButton {
-    border: none;
-    background-color: #f0f1ff;
-    color: #5664f5;
-    font-size: 1.25rem;
-    padding: .375rem;
-    cursor: pointer;
-    transition: background-color 0.15s ease,
-      color 0.15s ease;
-  }
-
-  .actionButton:hover {
-    opacity: 70%;
-  }
-
-  .actionButton:active {
-    color: #2a37a8
-  }
-</style>
 <!-- ISSUE: #36 fix(tasks): remove 'id' tags from inputs -->
 <article>
   <input type="checkbox">
   <input type="text" placeholder="Task title">
-  <button id="deleteButton" class="actionButton">✕</button>
-  <button id="editButton" class="actionButton">⋮</button>
+  <button id="deleteButton">
+    <span class="material-symbols-outlined">
+      close
+    </span>
+  </button>
+  <button id="editButton">
+    <span class="material-symbols-outlined">
+      more_vert
+    </span>
+  </button>
 </article>

@@ -25,7 +25,7 @@
   /* Text */
   color: var(--a);
   font-weight: bold;
-  font-size: 1.5em;
+  font-size: large;
 
   /* Backdrop */
   background-color: var(--c);
@@ -37,12 +37,6 @@
     filter: brightness(var(--brightness));
   }
 }
-/* 
-button,
-.button {
-  padding: 1em;
-  cursor: pointer;
-} */
 
 select,
 .select {
@@ -55,12 +49,24 @@ select,
   background-size: 1rem;
 }
 
-input[type=text],
-.inputText {
-  border: none;
-  outline: none;
+input[type=text], input[type=number] {
+  font-size: large;
+  color: var(--a);
+  /* background-color: var(--c); */
+  background-color: white;
+  border: var(--border);
+  padding: .5em;
 
   &::placeholder {
     color: var(--b);
   }
+}
+
+input[type=checkbox] {
+  --size: 2em;
+  accent-color: var(--a);
+  width: var(--size);
+  height: var(--size);
+  margin-right: .8em;
+  cursor: pointer;
 }
