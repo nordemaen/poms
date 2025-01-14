@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap');
+
+/* Colour Palette */
+:root {
+  /* Neon Blue */
+  --a: #5664f5;
+  /* Vista Blue */
+  --b: #a3a6ff;
+  /* Magnolia */
+  --c: #f0f1ff;
+  /* Khakhi */
+  --d: #b5a69d;
+  /* Charcoal */
+  --e: #2c3e50;
+
+  --border: 0.125em solid var(--b);
+  --brightness: 95%;
+  --font-family: "Lexend Deca", "Noto Serif", serif;
+}
+
+/* Clickable elements */
+:is(button, .button, select, .select) {
+  all: unset;
+
+  /* Text */
+  color: var(--a);
+  font-weight: bold;
+  font-size: large;
+
+  /* Backdrop */
+  background-color: var(--c);
+  border: var(--border);
+  cursor: pointer;
+  padding: .5em;
+
+  &:hover {
+    filter: brightness(var(--brightness));
+  }
+}
+
+select,
+.select {
+  padding: 0.7rem 2.5rem 0.7rem 1rem;
+  appearance: none;
+
+  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%235664f5"%3E%3Cpath d="M7 10l5 5 5-5z"/%3E%3C/svg%3E');
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1rem;
+}
+
+input[type=text], input[type=number] {
+  font-size: large;
+  color: var(--a);
+  /* background-color: var(--c); */
+  background-color: white;
+  border: var(--border);
+  padding: .5em;
+
+  &::placeholder {
+    color: var(--b);
+  }
+}
+
+input[type=checkbox] {
+  --size: 2em;
+  accent-color: var(--a);
+  width: var(--size);
+  height: var(--size);
+  margin-right: .8em;
+  cursor: pointer;
+}
