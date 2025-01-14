@@ -68,17 +68,10 @@ export class Timer extends HTMLElement {
     }
 
     #handleBreakStateChange() {
-        if (!this.#isBreak) {
-            this.#isBreak = true;
-            this.#time = this.#maxTime / 5;
-            this.#maxTime = this.#time;
-            this.state = 'pause'; 
-        } else { 
-            this.#isBreak = false;
-            this.#time = this.#selectedTime;
-            this.#maxTime = this.#selectedTime;
-            this.state = 'pause';
-        }
+        this.#isBreak = !this.#isBreak;
+        this.#time = this.#isBreak ? this.#maxTime / 5 : this.#selectedTime;
+        this.#maxTime = this.#time;
+        this.state = 'pause';
         this.#updateDisplay();
     }
 
