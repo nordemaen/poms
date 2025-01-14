@@ -1,3 +1,5 @@
+import { notificationDisplay, playSound } from '../utils.mjs';
+
 const MINUTE = 60_000;
 
 export class Timer extends HTMLElement {
@@ -46,6 +48,7 @@ export class Timer extends HTMLElement {
             this.#time = this.#selectedTime;
             this.#maxTime = this.#selectedTime;
         } else if (this.state === 'play') {
+            playSound('../../start.mp3');
             this.#previousTimestamp = performance.now();
             this.#animationId = requestAnimationFrame(this.#animationFrame.bind(this));
         }
@@ -58,6 +61,7 @@ export class Timer extends HTMLElement {
         if (this.state === 'play') {
             if (this.#time <= 0) {
                 this.#handleBreakStateChange();
+                notificationDisplay('Pomodoro Timer', 'Time to take a break!');
                 return;
             }
             this.#time -= elapsed;

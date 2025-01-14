@@ -9,10 +9,21 @@
 
 <script type="module" defer src="script.mjs"></script>
 <script type="module">
-  import './components/components.mjs';
+  import './components/init.mjs';
+  import { requestNotificationPermission } from './components/utils.mjs';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const notificationButton = document.querySelector('#notificationButton').addEventListener('click', requestNotificationPermission);
+  });
 </script>
 <link href="style.css" rel="stylesheet">
 <!-- -->
+<header>
+  <h1>Pom's Pomodoro</h1>
+  <p>A simple task manager and timer</p>
+  <!-- style, float to the right -->
+  <button id="notificationButton">Trigger Notifications</button>
+</header>
 
 <section class="container">
   <timer-component></timer-component>
