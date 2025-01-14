@@ -7,6 +7,8 @@
 <link rel="icon" href="Icon.png">
 <link rel="manifest" href="app.webmanifest" crossorigin="use-credentials">
 
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@1" rel="stylesheet" />
+
 <script type="module" defer src="script.mjs"></script>
 <script type="module">
   import './components/init.mjs';
@@ -16,6 +18,7 @@
     const notificationButton = document.querySelector('#notificationButton').addEventListener('click', requestNotificationPermission);
   });
 </script>
+
 <link href="style.css" rel="stylesheet">
 <!-- -->
 <header>
@@ -25,7 +28,5 @@
   <button id="notificationButton">Trigger Notifications</button>
 </header>
 
-<section class="container">
-  <timer-component></timer-component>
-  <task-list id="main"></task-list>
-</section>
+<timer-component></timer-component>
+<task-list></task-list>
