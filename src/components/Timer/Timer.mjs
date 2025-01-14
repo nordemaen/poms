@@ -1,89 +1,135 @@
-'use strict';
+import { notificationDisplay, playSound } from '../utils.mjs';
+
+const MINUTE = 60_000;
 
 export class Timer extends HTMLElement {
-  #intervalId;
-  #isPaused = false;
-  #timerSVG;
-  #timerDisplay;
-  #startButton;
-  #stopButton;
-  #pauseButton;
-  #durationInput;
-  #durationOptions;
-  #selectedDuration;
-  #remainingTime;
+    #timerSVG;
+    #timerDisplay;
+    #controls;
+    #durationInput;
+    #durationOptions;
 
-  async connectedCallback() {
-    this.attachShadow({ mode: 'open' });
-    const response = await fetch(import.meta.resolve('./Timer.html')).then()
-    this.shadowRoot.innerHTML = await response.text();
+    // ms
+    #time = 25 * MINUTE;
+    #maxTime = 25 * MINUTE;
 
-    this.#timerSVG = this.shadowRoot.querySelector('#timer');
-    this.#timerDisplay = this.#timerSVG.querySelector('text');
-    this.#startButton = this.shadowRoot.querySelector('#start');
-    this.#stopButton = this.shadowRoot.querySelector('#stop');
-    this.#pauseButton = this.shadowRoot.querySelector('#pause');
-    this.#durationInput = this.shadowRoot.querySelector('#durationInput');
-    this.#durationOptions = this.shadowRoot.querySelector('#durationOptions');
+    #previousTimestamp;
+    #animationId;
+    #isBreak = false;
 
-    this.#startButton.addEventListener('click', () => this.start());
-    this.#stopButton.addEventListener('click', () => this.stop());
-    this.#pauseButton.addEventListener('click', () => this.pause());
-  }
+    async connectedCallback() {
+        const response = await fetch(import.meta.resolve('./Timer.html'))
+        this.innerHTML = await response.text();
 
-  start() {
-    if (this.#intervalId) return;
+        this.#timerSVG = this.querySelector('#timer');
+        this.#timerDisplay = this.#timerSVG.querySelector('text');
+        this.#controls = this.querySelector('fieldset');
+        this.#durationInput = this.querySelector('#durationInput');
+        this.#durationOptions = this.querySelector('#durationOptions');
 
-    this.#selectedDuration = parseInt(this.#durationOptions.value);
+        this.#controls.querySelectorAll('input').forEach(input => input.addEventListener('change', this.#handleStateChange.bind(this)));
 
+        const handleOptionChange = () => {
+            this.state = "reset";
+        };
+        this.#durationInput.addEventListener('change', handleOptionChange);
+        this.#durationOptions.addEventListener('change', handleOptionChange);
 
-    if (this.#durationOptions.value === 'custom') {
-      this.#selectedDuration = parseInt(this.#durationInput.value);
-      if (isNaN(this.#selectedDuration) || this.#selectedDuration < 1) {
-        alert('Please enter a valid duration (positive integer).');
-        return;
-      }
+        this.#previousTimestamp = performance.now();
+        this.#animationId = requestAnimationFrame(this.#animationFrame.bind(this));
     }
 
-    this.#remainingTime = this.#selectedDuration * 60;
+    disconnectedCallback() {
+        cancelAnimationFrame(this.#animationId);
+    }
 
-    let intervalCallback = () => {
-      if (!this.#isPaused) {
-        if (this.#remainingTime > 0) {
-          this.#remainingTime--;
-          this.#updateDisplay();
-        } else {
-          this.stop();
+    #handleStateChange() {
+        if (this.state === 'reset') {
+            this.#time = this.#selectedTime;
+            this.#maxTime = this.#selectedTime;
+        } else if (this.state === 'play') {
+            playSound('../../start.mp3');
+            this.#previousTimestamp = performance.now();
+            this.#animationId = requestAnimationFrame(this.#animationFrame.bind(this));
         }
-      }
-    };
-
-    intervalCallback();
-    this.#intervalId = setInterval(intervalCallback, 1000);
-  }
-
-  stop() {
-    clearInterval(this.#intervalId);
-    this.#intervalId = null;
-    this.#remainingTime = this.#selectedDuration * 60;
-    this.#updateDisplay();
-    this.#isPaused = false;
-  }
-
-  pause() {
-    this.#pauseButton.textContent = this.#isPaused ? 'Pause' : 'Resume';
-
-    if (this.#intervalId) {
-      this.#isPaused = !this.#isPaused;
     }
-  }
 
-  #updateDisplay() {
-    const minutes = Math.floor(this.#remainingTime / 60);
-    const seconds = this.#remainingTime % 60;
-    this.#timerSVG.style.setProperty('--delay', `-${this.#remainingTime / (this.#selectedDuration * 60)}s`)
-    this.#timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-  }
+    #animationFrame(timestamp) {
+        const elapsed = timestamp - this.#previousTimestamp;
+        this.#previousTimestamp = timestamp;
+
+        if (this.state === 'play') {
+            if (this.#time <= 0) {
+                this.#handleBreakStateChange();
+                notificationDisplay('Pomodoro Timer', 'Time to take a break!');
+                return;
+            }
+            this.#time -= elapsed;
+        }
+
+        this.#updateDisplay();
+        this.#animationId = requestAnimationFrame(this.#animationFrame.bind(this));
+    }
+
+    #handleBreakStateChange() {
+        this.#isBreak = !this.#isBreak;
+        this.#time = this.#isBreak ? this.#maxTime / 5 : this.#selectedTime;
+        this.#maxTime = this.#time;
+        this.state = 'pause';
+        this.#updateDisplay();
+    }
+
+    #updateDisplay() {
+        const formattedTime = `${String(this.minutes).padStart(2, '0')}:${String(this.seconds).padStart(2, '0')}`;
+        this.#timerSVG.style.setProperty('--delay', `-${this.#time / this.#maxTime}s`);
+        this.#timerDisplay.textContent = formattedTime;
+        document.title = `${formattedTime} - Pom's Pomodoro`;
+    }
+
+    get minutes() {
+        return (~~(this.#time / MINUTE)).toString()
+    }
+
+    get seconds() {
+        return (~~(this.#time % MINUTE / 1_000)).toString()
+    }
+
+    get #selectedTime() {
+        if (this.#durationOptions.value === 'custom') {
+            return this.#customTime * MINUTE
+        }
+        else {
+            return parseInt(this.#durationOptions.value) * MINUTE
+        }
+    }
+
+    get #customTime() {
+        const time = parseInt(this.#durationInput.value);
+        if ((isNaN(time)) || time < 1) {
+            return 25; // just return it if not valid
+        }
+        return time;
+    }
+
+    get state() {
+        if (this.#controls) {
+            const checkedInput = this.#controls.querySelector('input:checked');
+            if (checkedInput) {
+                return checkedInput.id;
+            }
+        }
+        return null;
+    }
+
+    set state(state) {
+        if (this.#controls) {
+            const targetInput = this.#controls.querySelector(`#${state}`);
+            if (targetInput) {
+                targetInput.checked = true;
+            }
+        }
+        this.#handleStateChange();
+    }
 }
 
 customElements.define('timer-component', Timer);
