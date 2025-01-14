@@ -1,27 +1,131 @@
-@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap');
+@import url('./styles/theme.css');
 
 body {
-    background-color: #f7f9fc;
-    font-family: "Lexend Deca", serif;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
+  background-color: #f7f9fc;
+  font-family: var(--font-family);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
 }
 
-/* A button, or something pretending to be */
-button, .button {
-    all: unset;
-    background-color: var(--color-component);
-    font-weight: bold;
-    padding: 1em;
-    cursor: pointer;
-    font-size: 1.25em;
-    border: var(--color-border) solid;
+@keyframes timerAnimation {
+  0% {
+    stroke-dasharray: 0 283;
+  }
 
-    &:hover {
-        filter: brightness(var(--brightness));
+  100% {
+    stroke-dasharray: 283 283;
+  }
+}
+
+timer-component {
+  select+input {
+    display: none
+  }
+
+  select:has(option[value=custom]:checked)+input {
+    display: block;
+  }
+
+  svg {
+    width: 20em;
+
+    --delay: -1s;
+    stroke: var(--a);
+    fill: var(--a);
+
+    circle {
+      fill: none;
+      transform: rotate(-90deg) scaleY(-1);
+      transform-origin: center;
+      animation: timerAnimation linear 1s;
+      animation-play-state: paused;
+      animation-delay: var(--delay);
     }
+  }
+
+  menu {
+    border: none;
+    display: flex;
+
+    input,
+    input:checked+label,
+    #play:checked~#reset+label,
+    #pause:has(~#reset:checked)+label {
+      display: none;
+    }
+
+    svg {
+      width: 1em;
+      height: 1em;
+    }
+  }
 }
+
+/* .controls {
+
+  input,
+  input:checked+label {
+    display: none
+  }
+
+  &:is(fieldset) {
+    border: none;
+    display: flex;
+
+    #play:checked~#reset+label,
+    #pause:has(~#reset:checked)+label {
+      display: none;
+    }
+
+    svg {
+      width: 1.5rem;
+      height: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+
+task-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f0f1ff;
+  padding: 1rem 1.25rem;
+  border-radius: 0 1rem 1rem 0;
+  margin-bottom: 1.25rem;
+  transition: transform 0.15s ease;
+  border-left: .25rem solid #5664f5;
+
+  &:hover {
+    filter: brightness(var(--brightness));
+  }
+}
+
+input[type=checkbox] {
+  accent-color: #5664f5;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: .875rem;
+  cursor: pointer;
+}
+
+input[type=text] {
+  border: none;
+  font-size: 1.275rem;
+  color: #5664f5;
+  font-weight: 500;
+  background: none;
+  outline: none;
+}
+
+input[type=text]::placeholder {
+  color: #a3a6ff;
+}
+
+input[type=checkbox]:checked+input[type=text] {
+  text-decoration: line-through;
+} */
