@@ -14,22 +14,24 @@ export async function requestNotificationPermission() {
 
     try {
         const permission = await Notification.requestPermission();
-        return permission === 'granted'; 
+        return permission === 'granted';
     } catch (error) {
         console.error("Error requesting notification permission:", error);
         return false;
     }
 }
 
-export async function notificationDisplay(title, description) {
-    new Notification(
-        title,
-        {
+export function notificationDisplay(title, description, icon = '../icon.png') {
+    if (Notification.permission === 'granted') {
+        new Notification(title, {
             body: description,
             icon: '../icon.png',
             badge: '../icon.png'
-        }
-    );
+            // silent: true, // Uncomment to disable sound
+        });
+    } else {
+        console.warn('Notifications are not permitted.');
+    }
 }
 
 export function playSound(path) {

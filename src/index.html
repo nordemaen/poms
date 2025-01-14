@@ -10,12 +10,11 @@
 <script type="module" defer src="script.mjs"></script>
 <script type="module">
   import './components/init.mjs';
-  import { requestNotificationPermission, notificationDisplay } from './components/utils.mjs';
+  import { requestNotificationPermission } from './components/utils.mjs';
 
   document.addEventListener('DOMContentLoaded', () => {
     const notificationButton = document.querySelector('#notificationButton').addEventListener('click', requestNotificationPermission);
   });
-
 </script>
 <link href="style.css" rel="stylesheet">
 <!-- -->

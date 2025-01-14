@@ -1,3 +1,5 @@
+import { notificationDisplay, playSound } from '../utils.mjs';
+
 /** ms in one minute*/
 const MINUTE = 60_000;
 
@@ -44,6 +46,10 @@ export class Timer extends HTMLElement {
 
   // Update timer whenever `state` changes
   #handleStateChange() {
+    if (this.state === 'play') {
+        playSound('../../start.mp3');
+    }
+
     if (this.state === 'reset') {
       this.#time = this.#selectedTime;
       this.#maxTime = this.#selectedTime;
@@ -57,6 +63,7 @@ export class Timer extends HTMLElement {
     if (this.state === 'play') {
       if (this.#time <= 0) {
         this.state = 'reset';
+        notificationDisplay('Pomodoro Timer', 'Time is up! Take a break.');
         return;
       }
 
