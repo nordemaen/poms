@@ -11,6 +11,7 @@
 
 <script type="module" defer src="script.mjs"></script>
 <script type="module">
+  // ISSUE: #61 refactor: move inline script into `script.mjs`
   import './components/init.mjs';
   import { requestNotificationPermission } from './components/utils.mjs';
 
@@ -20,7 +21,9 @@
 </script>
 
 <link href="style.css" rel="stylesheet">
+
 <!-- -->
+
 <header>
   <h1>Pom's Pomodoro</h1>
   <p>A simple task manager and timer</p>
@@ -30,3 +33,67 @@
 
 <timer-component></timer-component>
 <task-list></task-list>
+
+<!-- -->
+
+<template id="task-entry-template">
+  <!-- ISSUE: #36 fix(tasks): remove 'id' tags from inputs -->
+  <article>
+    <input type="checkbox">
+    <input type="text" placeholder="Task title">
+    <button id="deleteButton">
+      <span class="material-symbols-outlined">
+        close
+      </span>
+    </button>
+    <button id="editButton">
+      <span class="material-symbols-outlined">
+        more_vert
+      </span>
+    </button>
+  </article>
+</template>
+
+<template id="task-list-template">
+  <button id="newTaskButton">Add task</button>
+  <ol id="taskList"></ol>
+</template>
+
+<template id="timer-component-template">
+  <select id="durationOptions">
+    <option value="25">25 minutes</option>
+    <option value="50">50 minutes</option>
+    <option value="custom">Custom</option>
+  </select>
+  <input type="number" id="durationInput" min="1" step="1" value="1" pattern="\d+">
+
+  <svg id="timer" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="45" stroke-width="1"></circle>
+    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"></text>
+  </svg>
+  <br>
+
+  <fieldset class="controls">
+    <input id="play" type="radio" name="controls" value="play">
+    <label for="play" class="button">
+      <span class="material-symbols-outlined">
+        play_arrow
+      </span>
+      Play
+    </label>
+    <input id="pause" type="radio" name="controls" value="pause">
+    <label for="pause" class="button">
+      <span class="material-symbols-outlined">
+        pause
+      </span>
+      Pause
+    </label>
+    <input id="reset" type="radio" name="controls" value="reset" checked>
+    <label for="reset" class="button">
+      <span class="material-symbols-outlined">
+        replay
+      </span>
+      Reset
+    </label>
+  </fieldset>
+</template>

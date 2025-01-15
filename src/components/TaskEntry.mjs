@@ -4,8 +4,7 @@ export default class TaskEntry extends HTMLLIElement {
   #deleteButton;
 
   async connectedCallback() {
-    const response = await fetch(import.meta.resolve('./TaskEntry.html'))
-    this.innerHTML = await response.text();
+    this.append(document.querySelector('#task-entry-template').content.cloneNode(true));
 
     this.#checkbox = this.querySelector("input[type=checkbox]");
     this.#taskTitle = this.querySelector("input[type=text]");

@@ -1,4 +1,4 @@
-import { notificationDisplay, playSound } from '../utils.mjs';
+import { notificationDisplay, playSound } from './utils.mjs';
 
 const MINUTE = 60_000;
 
@@ -18,8 +18,7 @@ export class Timer extends HTMLElement {
     #isBreak = false;
 
     async connectedCallback() {
-        const response = await fetch(import.meta.resolve('./Timer.html'))
-        this.innerHTML = await response.text();
+        this.append(document.querySelector('#timer-component-template').content.cloneNode(true));
 
         this.#timerSVG = this.querySelector('#timer');
         this.#timerDisplay = this.#timerSVG.querySelector('text');

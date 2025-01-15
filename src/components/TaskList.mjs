@@ -13,8 +13,7 @@ export class TaskList extends HTMLElement {
   #observer = new MutationObserver(this.#handleChange.bind(this));
 
   async connectedCallback() {
-    const response = await fetch(import.meta.resolve('./TaskList.html'))
-    this.innerHTML = await response.text();
+    this.append(document.querySelector('#task-list-template').content.cloneNode(true));
 
     this.#newTaskButton = this.querySelector('#newTaskButton');
     this.#newTaskButton.addEventListener('click', () => {
