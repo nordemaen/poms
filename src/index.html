@@ -22,10 +22,13 @@
 <link href="style.css" rel="stylesheet">
 <!-- -->
 <header>
-  <h1>Pom's Pomodoro</h1>
-  <p>A simple task manager and timer</p>
-  <!-- style, float to the right -->
-  <button id="notificationButton">Trigger Notifications</button>
+  <!-- put into template menu # -->
+  <button>
+    <span class="material-symbols-outlined">
+      more_vert
+    </span>
+  </button>
+  <button id="notificationButton" style="display: none;">Trigger Notifications</button>
 </header>
 
 <timer-component></timer-component>

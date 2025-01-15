@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
 
 /* Colour Palette */
 :root {
   /* Neon Blue */
-  --a: #5664f5;
+  --a: #6A8FB5;
   /* Vista Blue */
   --b: #a3a6ff;
   /* Magnolia */
@@ -13,9 +13,9 @@
   /* Charcoal */
   --e: #2c3e50;
 
-  --border: 0.125em solid var(--b);
+  /* --border: 0.125em solid var(--b); */
   --brightness: 95%;
-  --font-family: "Lexend Deca", "Noto Serif", serif;
+  --font-family: "Space Grotesk", "Noto Serif", serif;
 }
 
 /* Clickable elements */
@@ -23,12 +23,12 @@
   all: unset;
 
   /* Text */
-  color: var(--a);
+  color: var(--e);
   font-weight: bold;
   font-size: large;
 
   /* Backdrop */
-  background-color: var(--c);
+  background-color: var(--a);
   border: var(--border);
   cursor: pointer;
   padding: .5em;
@@ -51,20 +51,20 @@ select,
 
 input[type=text], input[type=number] {
   font-size: large;
-  color: var(--a);
+  color: var(--e);
   /* background-color: var(--c); */
   background-color: white;
   border: var(--border);
   padding: .5em;
 
   &::placeholder {
-    color: var(--b);
+    color: var(--e);
   }
 }
 
 input[type=checkbox] {
   --size: 2em;
-  accent-color: var(--a);
+  accent-color: var(--e);
   width: var(--size);
   height: var(--size);
   margin-right: .8em;
