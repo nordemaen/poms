@@ -10,15 +10,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@1" rel="stylesheet" />
 
 <script type="module" defer src="script.mjs"></script>
-<script type="module">
-  // ISSUE: #61 refactor: move inline script into `script.mjs`
-  import './components/init.mjs';
-  import { requestNotificationPermission } from './components/utils.mjs';
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const notificationButton = document.querySelector('#notificationButton').addEventListener('click', requestNotificationPermission);
-  });
-</script>
 
 <link href="style.css" rel="stylesheet">
 
